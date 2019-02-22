@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,16 +23,35 @@ namespace DelegateBankExample
             _medarbejder = medarbejder;
         }
 
-        public int Add(int amount)
+        public bool ActivateMoneyLaundryAlert()
+        {
+            if (AccountDeposit == null)
+            {
+                AccountDeposit = AddPeasant;
+                return true;
+
+            }
+            return false;
+        }
+        public bool DeActivateMoneyLaundryAlert()
+        {
+            if (AccountDeposit == AddPeasant)
+            {
+                AccountDeposit = Add;
+                return true;
+
+            }
+            return false;
+        }
+
+        private int Add(int amount)
         {
             _balance += amount;
             return _balance;
         }
 
-        public int AddMasterRace(int amount)
+        private int AddMasterRace(int amount)
         {
-
-            //TODO: Lav condition om så den skifter delegate metode
             if (_medarbejder == true && amount > 100000)
             {
                 Console.WriteLine("Du sætter vist lidt meget ind mesterløgsovs.");
@@ -43,7 +63,7 @@ namespace DelegateBankExample
             return _balance;
         }
 
-        public int AddPeasant(int amount)
+        private int AddPeasant(int amount)
         {
             if (_medarbejder == false && amount > 50000)
             {
@@ -56,13 +76,13 @@ namespace DelegateBankExample
             return _balance;
         }
 
-        public int Subtract(int amount)
+        private int Subtract(int amount)
         {
             _balance -= amount;
             return _balance;
         }
 
-        public int SubtractMax(int amount)
+        private int SubtractMax(int amount)
         {
             if (amount > 1000)
             {
@@ -75,7 +95,7 @@ namespace DelegateBankExample
             return _balance;
         }
 
-        public int SubtractLimit(int amount)
+        private int SubtractLimit(int amount)
         {
             if ((_balance - amount) < 0)
             {
