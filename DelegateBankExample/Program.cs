@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,18 +13,24 @@ namespace DelegateBankExample
         static void Main(string[] args)
         {
             Account NikolajsAccount = new Account(true);
-
             NikolajsAccount.AccountDeposit = NikolajsAccount.Add;
-
-            Console.WriteLine(NikolajsAccount.AccountDeposit(3));
-            Console.WriteLine(NikolajsAccount.AccountDeposit(99000));
-
+            NikolajsAccount.AccountWithdrawal = NikolajsAccount.Subtract;
+            Console.WriteLine("Standard: \t" + NikolajsAccount.AccountDeposit(50001) + "\n");
+            Console.WriteLine("Standard: \t" + NikolajsAccount.AccountWithdrawal(50001) + "\n");
+            NikolajsAccount.AccountDeposit = NikolajsAccount.AddMasterRace;
+            NikolajsAccount.AccountWithdrawal = NikolajsAccount.SubtractMax;
+            Console.WriteLine("Masterrace: \t" + NikolajsAccount.AccountDeposit(50001) + "\n");
+            Console.WriteLine("Max: \t\t" + NikolajsAccount.AccountWithdrawal(50001) + "\n");
             Account JohanAccount = new Account(false);
-
             JohanAccount.AccountDeposit = JohanAccount.Add;
-
-            Console.WriteLine(JohanAccount.AccountDeposit(49999));
-            Console.WriteLine(JohanAccount.AccountDeposit(50001));
+            JohanAccount.AccountWithdrawal = JohanAccount.Subtract;
+            Console.WriteLine("Standard: \t" + JohanAccount.AccountDeposit(50001) + "\n");
+            Console.WriteLine("Standard: \t" + JohanAccount.AccountWithdrawal(50002) + "\n");
+            JohanAccount.AccountDeposit = JohanAccount.AddPeasant;
+            JohanAccount.AccountWithdrawal = JohanAccount.SubtractLimit;
+            Console.WriteLine("Peasant: \t" + JohanAccount.AccountDeposit(50001) + "\n");
+            Console.WriteLine("Peasant: \t" + JohanAccount.AccountDeposit(1) + "\n");
+            Console.WriteLine("Limit: \t" + JohanAccount.AccountWithdrawal(1) + "\n");
         }
     }
 }
